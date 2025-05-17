@@ -428,7 +428,16 @@ class IndexTTS:
         wav = wav.cpu() # to cpu
         if output_path:
             # 直接保存音频到指定路径中
-            os.makedirs(os.path.dirname(output_path),exist_ok=True)
+            # os.makedirs(os.path.dirname(output_path),exist_ok=True)
+            # torchaudio.save(output_path, wav.type(torch.int16), sampling_rate)
+            # print(">> wav file saved to:", output_path)
+            # return output_path
+              # 直接保存音频到指定路径中
+            if os.path.isfile(output_path):
+                os.remove(output_path)
+                print(">> remove old wav file:", output_path)
+            if os.path.dirname(output_path) != "":
+                os.makedirs(os.path.dirname(output_path),exist_ok=True)
             torchaudio.save(output_path, wav.type(torch.int16), sampling_rate)
             print(">> wav file saved to:", output_path)
             return output_path
